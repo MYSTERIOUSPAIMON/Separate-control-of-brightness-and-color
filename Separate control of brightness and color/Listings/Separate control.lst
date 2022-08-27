@@ -1,0 +1,157 @@
+C51 COMPILER V9.59.0.0   SEPARATE_CONTROL                                                  08/27/2022 15:39:07 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SEPARATE_CONTROL
+OBJECT MODULE PLACED IN .\Objects\Separate control.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Separate control.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\Separate control.lst) TABS(2) OBJECT(.\Objects\Separate control.obj)
+
+line level    source
+
+   1          #include <__STC8H_H__.H>
+   2          #include "intrins.h"
+   3          
+   4          int i=0;     //定义灯的周期
+   5          int a=0;     //定义key1
+   6          int b=0;     //定义key2
+   7          int TH=0;    //定义灯的初值
+   8          int flag=0; 
+   9          int c=0;
+  10          
+  11          void main()
+  12          {
+  13   1          P0M0 = 0xff;
+  14   1          P0M1 = 0x00;
+  15   1        IT0=1;
+  16   1          EX0=1;
+  17   1        IT1=1;
+  18   1        EX1=1;
+  19   1          EA=1;
+  20   1      
+  21   1          while(1){
+  22   2        if(b==0){  //红灯
+  23   3          if(a==0)
+  24   3            {
+  25   4                TH=600;
+  26   4            }
+  27   3      
+  28   3            if(a==1)
+  29   3          {
+  30   4              TH=300;
+  31   4            }
+  32   3      
+  33   3            if(a==2)
+  34   3          {
+  35   4               TH=0;}
+  36   3      
+  37   3          for(i=0;i<600;i++)
+  38   3          {
+  39   4             if(i<TH)
+  40   4             P01=1;
+  41   4             if(i>=TH)
+  42   4             P01=0;    
+  43   4            }
+  44   3          }
+  45   2      
+  46   2        if(b==1){   //蓝灯
+  47   3          if(a==0)
+  48   3            {
+  49   4                TH=600;
+  50   4            }
+  51   3      
+  52   3            if(a==1)
+  53   3          {
+  54   4              TH=300;
+C51 COMPILER V9.59.0.0   SEPARATE_CONTROL                                                  08/27/2022 15:39:07 PAGE 2   
+
+  55   4            }
+  56   3      
+  57   3            if(a==2)
+  58   3          {
+  59   4               TH=0;}
+  60   3      
+  61   3          for(i=0;i<600;i++)
+  62   3          {
+  63   4             if(i<TH)
+  64   4             P00=1;
+  65   4             if(i>=TH)
+  66   4             P00=0;    
+  67   4            }
+  68   3          }
+  69   2        if(b==2){    //绿灯
+  70   3          if(a==0)
+  71   3            {
+  72   4                TH=600;
+  73   4            }
+  74   3      
+  75   3            if(a==1)
+  76   3          {
+  77   4              TH=300;
+  78   4            }
+  79   3      
+  80   3            if(a==2)
+  81   3          {
+  82   4               TH=0;}
+  83   3      
+  84   3          for(i=0;i<600;i++)
+  85   3          {
+  86   4             if(i<TH)
+  87   4             P02=1;
+  88   4             if(i>=TH)
+  89   4             P02=0;    
+  90   4            }
+  91   3            }
+  92   2          }
+  93   1      }
+  94          
+  95          void int1_isr(void) interrupt 2  //key2
+  96          {
+  97   1        if(P33==0)
+  98   1      {
+  99   2        if(c==0)
+ 100   2        {c=1;}
+ 101   2         if(c==1)
+ 102   2         {
+ 103   3          b++;
+ 104   3          if(b>2)
+ 105   3          {
+ 106   4            b=0;
+ 107   4          }  
+ 108   3           c=0;
+ 109   3         }  
+ 110   2        } 
+ 111   1      }
+ 112          
+ 113          void int0_isr(void) interrupt 0  //key1
+ 114          {
+ 115   1        if(P32==0)
+ 116   1      {
+C51 COMPILER V9.59.0.0   SEPARATE_CONTROL                                                  08/27/2022 15:39:07 PAGE 3   
+
+ 117   2        if(flag==0)
+ 118   2        {flag=1;}
+ 119   2         if(flag==1)
+ 120   2         {
+ 121   3          a++;
+ 122   3          if(a>2)
+ 123   3          {
+ 124   4            a=0;
+ 125   4          }  
+ 126   3           flag=0;
+ 127   3         }  
+ 128   2        } 
+ 129   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    466    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

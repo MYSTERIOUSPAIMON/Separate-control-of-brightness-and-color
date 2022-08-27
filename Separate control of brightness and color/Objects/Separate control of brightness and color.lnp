@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Separate control.obj" 
+TO ".\Objects\Separate control of brightness and color" 
+PRINT(".\Listings\Separate control of brightness and color.m51") RAMSIZE(256) 
